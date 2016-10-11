@@ -2,6 +2,7 @@
 #define WAXING_WAX_H
 #include <X.h>
 #include <vector>
+#include <WF.h>
 namespace WAXING
 {
   class wax;
@@ -13,14 +14,13 @@ namespace WAXING
 class WAXING::wax
 {
   public:
-    std::vector<double> wf;
+    WF * wf;
   public :
-    void input(const char *path);
-    void output(const char *path);
+    void wax(X * x);
+    virtual ~wax();
 
+    void Initiallocation(double aaa);
     void Update();
-
-    void Setinilocation(double a);
 
   private:
     double * electronlocationvector;
@@ -32,8 +32,10 @@ class WAXING::wax
 
     X * field;
 
+    int size;
+
   private :
-    void CalculatevVelocity();
-    void Updatelocation();
-    void Updateends();
+    virtual void UpdateVelocity();
+    virtual void UpdateLocation();
+    virtual void UpdateWF();
 }
