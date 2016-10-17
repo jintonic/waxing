@@ -65,7 +65,9 @@ void wax::UpdateLocation()
 
 void wax::UpdateWF()
 {
-
+  double protential=field->GetPotential(electronlocationvector[0])
+    -field->GetPotential(driftlocationvector[0]);
+  wf->smpl.push_back(potential);
 }
 
 void wax::UpdateVelocity()
