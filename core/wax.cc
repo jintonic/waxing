@@ -8,6 +8,17 @@ wax::wax(X *x)
   field=x;
   wf=new WF;
   
+  driftlocationvector=new double[3];
+  electronlocationvector=new double[3];
+  electronvelocityvector=new double[3];
+  driftvelocityvector=new double[3];
+  for(int i=3;i-->0;)
+  {
+    driftlocationvector[i]=0;
+    electronlocationvector[i]=0;
+    electronvelocityvector[i]=0;
+    driftvelocityvector[i]=0;
+  }
 }
 wax::~wax()
 {
@@ -32,17 +43,22 @@ void wax::Update()
 
 void wax::InitialLocation(double aaa)
 {
-  electronlocationvector=new double;
-  electronlocationvector=aaa;
-  driftlocationvector=new double;
-  driftlocationvector=aaa;
+  electronlocationvector[0]=aaa;
+  driftlocationvector[0]=aaa;
 }
 
 void wax::UpdateLocation()
 {
   electronlocationvector+=electronvelocityvector;
   driftlocationvector+=driftdriftvelocityvector;
-  //check area limit
+  if(electronlocationvector[0]>field->GetXEdge(true))
+    electronlocationvector[0]=field->GetXEdge(true);
+  if(electronlocationvector[0]<field->GetXEdge(false))
+    electronlocationvector[0]=field->GetXEdge(false);
+  if(driftlocationvector[0]>field->GetXEdge(true))
+    driftlocationvector[0]=field->GetXEdge(true);
+  if(driftlocationvector[0]<field->GetXEdge(false))
+    driftlocationvector[0]=field->GetXEdge(false);
   //if get limit, relocate to closest limit
   UpdateWF();// update wf
 }

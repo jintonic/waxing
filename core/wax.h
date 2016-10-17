@@ -16,7 +16,7 @@ class WAXING::wax
   public:
     WF * wf;
   public :
-    void wax(X * x);
+    wax(X * x);
     virtual ~wax();
 
     void Initiallocation(double aaa);
@@ -28,7 +28,7 @@ class WAXING::wax
     double * electronvelocityvector;
     double * driftvelocityvector;
 
-    double oneend,anotherend;
+    double electronend,drifend;
 
     X * field;
 
