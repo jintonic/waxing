@@ -6,10 +6,6 @@
 namespace WAXING
 {
   class wax;
-
-  static const double electric;
-  static const double drift;
-
 }
 class WAXING::wax
 {
@@ -24,15 +20,15 @@ class WAXING::wax
 
   private:
     double * electronlocationvector;
-    double * driftlocationvector;
+    double * holelocationvector;
     double * electronvelocityvector;
-    double * driftvelocityvector;
+    double * holevelocityvector;
 
-    double electronend,drifend;
+    double electronend,holeend;
 
     X * field;
 
-    int size;
+    int nDimensions;
 
   private :
     virtual void UpdateVelocity();
