@@ -76,6 +76,34 @@ void wax::UpdateWF()
 
 void wax::UpdateVelocity()
 {
-   double mobility = 
-   electronvelocityvector[0] = mobility * field->GetE1(electronlocationvector[0]);
+}
+
+double wax::A(double E)
+{
+}
+
+
+double wax::R(double E)
+{
+  
+}
+
+TRotation * Rj(int j);
+{
+  //calculate Rotation matrix Rj
+  //Rj=Rx'(arccos((2/3)**0.5))Rz(phi110+(j-1)pi/2)
+  double pi=3.1415926;
+  double arccosthing=0.615480;
+  TRotation * Rj=new TRotation();
+  Rj->RotateZ(phi110+(j-1)*pi/2);
+  Rj->RotateX(arccosthing);
+  return Rj;
+}
+
+
+void readconstsfromfile()
+{
+  //hardcode first to test
+  //will update to read from file later
+  consts={42420,25.1,0.87,62,40180,49.3,0.72,589,107270,10,0.58,0,66333,18.1,0.744,0};
 }

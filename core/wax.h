@@ -3,6 +3,10 @@
 #include <X.h>
 #include <vector>
 #include <WF.h>
+#include <TRotation.h>
+#include <TVector3.h>
+
+using namespace std::
 namespace WAXING
 {
   class wax;
@@ -15,23 +19,40 @@ class WAXING::wax
     wax(X * x);
     virtual ~wax();
 
-    void Initiallocation(double aaa);
+    void Initial(double * location, double phi, double phi110);
     void Update();
+    void Setconsts(TString path)//need more detail
 
   private:
     double * electronlocationvector;
     double * holelocationvector;
     double * electronvelocityvector;
     double * holevelocityvector;
-
+    double * consts;//4*4
+    /*			miu0	E0	beta	miun
+     * electron 111	
+     * 		100
+     * hole	111
+     * 		100
+    */
+    double phi,phi110;
     double electronend,holeend;
 
     X * field;
 
     int nDimensions;
 
+
   private :
     virtual void UpdateVelocity();
     virtual void UpdateLocation();
     virtual void UpdateWF();
+    double A(double E);
+    double R(double E);
+
+    TRotation * Rj(int j);
+
+    void readconstsfromfile();
 }
+//rho rhopihi etc need a transform
+//xyz only for now
