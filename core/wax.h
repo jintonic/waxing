@@ -10,6 +10,10 @@ using namespace std::
 namespace WAXING
 {
   class wax;
+  
+
+  double pi=3.1415926;
+  double me=0.511//mev
 }
 class WAXING::wax
 {
@@ -51,7 +55,9 @@ class WAXING::wax
     double R(double E);
 
     TRotation * Rj(int j);
+    TRotation * rj(int j);
 
+    double vs (bool Is111);
     void readconstsfromfile();
 }
 //rho rhopihi etc need a transform

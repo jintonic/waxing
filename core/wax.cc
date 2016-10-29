@@ -77,9 +77,42 @@ void wax::UpdateWF()
 void wax::UpdateVelocity()
 {
 }
-
-double wax::A(double E)
+#include <math.h>   
+double vs (bool Is111,double E);
 {
+  double miu0,E0,beta,miun;
+  if(Is111)
+  {
+    miu0=consts[0];
+    E0=consts[1];
+    beta=consts[2];
+    miun=costs[3];
+  }
+  else
+  {
+    miu0=consts[4];
+    E0=consts[5];
+    beta=consts[6];
+    miun=costs[7];
+  }
+  return miu0*E/pow(1+pow(E/E0,beta),1/beta)-miun*E;
+}
+
+double wax::A(double *E)
+{
+   
+}
+double wax::rj(int j)
+{
+  double mt=1.64*me;
+  double ml=0.0819*me;
+  TRotation *rj=ew TRotation;
+  rj->SetXPhi(1/mt);
+  rj->SetYPsi(1/ml);
+  rj->SetZTheta(1/mt);
+  TRotation * Rj1=Rj(j;)
+  rj=Rj1(j)->Inverse*rj*Rj1;
+  return rj;
 }
 
 
@@ -92,7 +125,7 @@ TRotation * Rj(int j);
 {
   //calculate Rotation matrix Rj
   //Rj=Rx'(arccos((2/3)**0.5))Rz(phi110+(j-1)pi/2)
-  double pi=3.1415926;
+  //double pi=3.1415926;
   double arccosthing=0.615480;
   TRotation * Rj=new TRotation();
   Rj->RotateZ(phi110+(j-1)*pi/2);
