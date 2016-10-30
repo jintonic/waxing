@@ -91,6 +91,7 @@ double vs (bool Is111,double E);
   else
   {
     miu0=consts[4];
+  else
     E0=consts[5];
     beta=consts[6];
     miun=costs[7];
@@ -100,9 +101,15 @@ double vs (bool Is111,double E);
 
 double wax::A(double *E)
 {
-   
+  TVector3 *E0=new TVector3(pow(0.5,0.5),pow(0.5,0.5),0);
+  double top=vs(false,GetlengthofE(E));
+  double bottom=0;
+  for(int i=1;i<5;i++)
+  {
+    //1/4*E0*rj(i)
+  }
 }
-double wax::rj(int j)
+TRotation * wax::rj(int j)
 {
   double mt=1.64*me;
   double ml=0.0819*me;

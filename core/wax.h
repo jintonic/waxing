@@ -59,6 +59,8 @@ class WAXING::wax
 
     double vs (bool Is111);
     void readconstsfromfile();
+
+    double GetlengthofE(double *E);
 }
 //rho rhopihi etc need a transform
 //xyz only for now
