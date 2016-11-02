@@ -101,14 +101,21 @@ double vs (bool Is111,double E);
 
 double wax::A(double *E)
 {
-  TVector3 *E0=new TVector3(pow(0.5,0.5),pow(0.5,0.5),0);
+  TVector3 *E0=new TVector3(1,0,0);//pow(0.5,0.5),pow(0.5,0.5),0)
   double top=vs(false,GetlengthofE(E));
-  double bottom=0;
+  TVector* bottom=new vector(0,0,0);
   for(int i=1;i<5;i++)
   {
-    //1/4*E0*rj(i)
+    TRotation* rjj=rj(i);
+    TVector3 * Erj=E0.transform(rjj;)
+    bottom+=1/4*Erj/pow(Erj.Dot(E0),0.5);
   }
+  double bot=bottom.Unit()*bottom;
+  return top/bot;
 }
+
+
+
 TRotation * wax::rj(int j)
 {
   double mt=1.64*me;
@@ -123,9 +130,11 @@ TRotation * wax::rj(int j)
 }
 
 
-double wax::R(double E)
+double wax::R(double *E,double AE)
 {
-  
+  TVector3 *E0=new TVector3(0,pow(2/3,0.5),pow(1/3,0.5));
+  double El=GetlengthofE(E);
+  double b=(vs(true,El)/AE)/(3*(E0.transform(rj(j))))
 }
 
 TRotation * Rj(int j);
