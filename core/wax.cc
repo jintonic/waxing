@@ -74,10 +74,13 @@ void wax::UpdateWF()
   wf->smpl.push_back(potential);
 }
 
+#include <math.h> 
 void wax::UpdateVelocity()
 {
+//need some way to find out n-D system 
+//to get a correct E
+//
 }
-#include <math.h>   
 double vs (bool Is111,double E);
 {
   double miu0,E0,beta,miun;
@@ -124,7 +127,7 @@ TRotation * wax::rj(int j)
   rj->SetXPhi(1/mt);
   rj->SetYPsi(1/ml);
   rj->SetZTheta(1/mt);
-  TRotation * Rj1=Rj(j;)
+  TRotation * Rj1=Rj(j);
   rj=Rj1(j)->Inverse*rj*Rj1;
   return rj;
 }
@@ -134,7 +137,20 @@ double wax::R(double *E,double AE)
 {
   TVector3 *E0=new TVector3(0,pow(2/3,0.5),pow(1/3,0.5));
   double El=GetlengthofE(E);
-  double b=(vs(true,El)/AE)/(3*(E0.transform(rj(j))))
+  TRotation * rj1=rj(1);
+  TRotation * rj2=rj(2);
+
+  double b=(vs(true,El)/AE-1)/(3*(Getlengthoftvetor3(E0.transform(rj2))/pow(E0.transform(rj2),0.5)-E0.transform(rj1)/pow(E0.transform(rj1),0.5)));
+  double a=1-3*b;
+  double top=a-b;
+  double bottombot=0;
+  for(int i=1;i<5;i++)
+  {
+    bottombot+=pow(E0.transform(rj(i)).Dot(E0),0.5);
+  }
+
+  double bottom=pow(E0.transform(rj(1)).Dot(E0),0.5)/bottombot-b;
+  return top/bottom;
 }
 
 TRotation * Rj(int j);

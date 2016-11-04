@@ -51,16 +51,19 @@ class WAXING::wax
     virtual void UpdateVelocity();
     virtual void UpdateLocation();
     virtual void UpdateWF();
-    double A(double E);
-    double R(double E);
+    double A(double *E);
+    double R(double *E,double AE);
+    
 
     TRotation * Rj(int j);
     TRotation * rj(int j);
 
-    double vs (bool Is111);
+    double vs (bool Is111,double E);
     void readconstsfromfile();
 
     double GetlengthofE(double *E);
+    double Getlengrhoftvector3(TVector3 * tar)
+    {return tar*tar.Unit();};
 }
 //rho rhopihi etc need a transform
 //xyz only for now
