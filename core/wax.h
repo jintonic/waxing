@@ -51,6 +51,10 @@ class WAXING::wax
     virtual void UpdateVelocity();
     virtual void UpdateLocation();
     virtual void UpdateWF();
+
+    TVector3 * vhole(double *E,double theta, double phi);
+    TVector3 * ve(double *E);
+
     double A(double *E);
     double R(double *E,double AE);
     
@@ -58,7 +62,7 @@ class WAXING::wax
     TRotation * Rj(int j);
     TRotation * rj(int j);
 
-    double vs (bool Is111,double E);
+    double vs (bool Is111,bool Ishole,double E);
     void readconstsfromfile();
 
     double GetlengthofE(double *E);
