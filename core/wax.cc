@@ -80,6 +80,20 @@ void wax::UpdateVelocity()
 //need some way to find out n-D system 
 //to get a correct E
 //
+
+  double *Ee=GetEfromfield(electronlocationvector);
+  double *Eh=GetEfromfield(holelocationvector);
+  TVector3 * vele=ve(Ee);
+  TVector3 * vh=vhole(Eh);
+
+  for(int i=0;i<3;i++)
+  {
+    electronvelocityvector[i]=vele(i);
+    holevelocityvector[i]=vh(i);
+  }
+
+
+
 }
 double vs (bool Is111,bool Ishole,double E);
 {
@@ -118,12 +132,12 @@ double vs (bool Is111,bool Ishole,double E);
   return miu0*E/pow(1+pow(E/E0,beta),1/beta)-miun*E;
 }
 
-double wax::A(double *E)
+double wax::A(double E)
 {
   //pro: acctual electric field strength??
   //post:A(E)
   TVector3 *E0=new TVector3(1,0,0);//pow(0.5,0.5),pow(0.5,0.5),0)
-  double top=vs(false,false,GetlengthofE(E));
+  double top=vs(false,false,E);
   TVector* bottom=new vector(0,0,0);
   for(int i=1;i<5;i++)
   {
@@ -153,12 +167,12 @@ TRotation * wax::rj(int j)
 }
 
 
-double wax::R(double *E,double AE)
+double wax::R(double E,double AE)
 {
   //pre:actual Electric vector, result of A(E)
   //post R(E)
   TVector3 *E0=new TVector3(0,pow(2/3,0.5),pow(1/3,0.5));
-  double El=GetlengthofE(E);
+  double El=E;
   TRotation * rj1=rj(1);
   TRotation * rj2=rj(2);
 
@@ -222,7 +236,31 @@ TVector3 * wax::vhole(double * E, double theta,double phi)
   return vp.transform(Ro);
 }
 
-Tvector3 * wax::ve(double *E)
+TVector3 * wax::ve(double *E)
 {
-
+  double lengthofE=GetlengthofE(E);
+  TVector3 * E0=GetUnitVector3(E);
+  double AE=A(lengthofE);
+  double RE=R(lengthofE,AE);
+  TVector3 *sum=new TVector3();
+  for(int i=1;i<5;i++)
+  {
+    double nj=njchun(RE,E0,i);
+    TVector3 *ET=E0.transform(rj(i));
+    sum+=(ET/pow(ET*E0,0.5))*nj
+  }
+  return sum*AE;
 }
+double wax::njchun(double R,TVector3 * E0,int j)
+{
+  double top=pow(E0.transform(rj(j))*E0,0.5);
+  double bot=0;
+  for(int i=1;i<5;i++)
+  {
+    bot+=pow(E0.transform(rj(i))*E0,0.5);
+  }
+  double nen=0.25;
+  return R*(top/bot-nen)+nen;
+  
+}
+  

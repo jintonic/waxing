@@ -19,6 +19,7 @@ class WAXING::wax
 {
   public:
     WF * wf;
+    double theta,phi;
   public :
     wax(X * x);
     virtual ~wax();
@@ -52,12 +53,13 @@ class WAXING::wax
     virtual void UpdateLocation();
     virtual void UpdateWF();
 
-    TVector3 * vhole(double *E,double theta, double phi);
+    TVector3 * vhole(double *E);
     TVector3 * ve(double *E);
 
-    double A(double *E);
-    double R(double *E,double AE);
+    double A(double E);
+    double R(double E,double AE);
     
+    double njchun(double R,Tvector3 *E0i,int j)
 
     TRotation * Rj(int j);
     TRotation * rj(int j);
