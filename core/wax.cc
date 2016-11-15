@@ -144,10 +144,10 @@ double wax::A(double E)
   for(int i=1;i<5;i++)
   {
     TRotation* rjj=rj(i);
-    TVector3 * Erj=E0->Transform(*rjj)
-    bottom+=1/4*Erj/pow(Erj.Dot(E0),0.5);
+    TVector3  Erj=E0->Transform(*rjj);
+    *bottom+=1/4*Erj*(1/pow(Erj.Dot(*E0),0.5));
   }
-  double bot=bottom.Unit()*bottom;
+  double bot=bottom->Unit()**bottom;
   return top/bot;
 }
 
@@ -157,15 +157,13 @@ TRotation * wax::rj(int j)
 {
   //pro: jth dirtection
   //post : rj
-  double mt=1.64*me;
-  double ml=0.0819*me;
-  TRotation *rj=new TRotation;
-  rj->SetXPhi(1/mt);
-  rj->SetYPsi(1/ml);
-  rj->SetZTheta(1/mt);
+  double mt=1.64*wame;
+  double ml=0.0819*wame;
+  TRotation *frj=new TRotation();
+  frj->RotateAxes(TVector3(1/mt,0,0),TVector3(0,1/ml,0),TVector3(0,0,1/mt));
   TRotation * Rj1=Rj(j);
-  rj=Rj1(j)->Inverse*rj*Rj1;
-  return rj;
+  *frj=Rj(j)->Inverse()*(*frj)**Rj1;
+  return frj;
 }
 
 
@@ -178,27 +176,27 @@ double wax::R(double E,double AE)
   TRotation * rj1=rj(1);
   TRotation * rj2=rj(2);
 
-  double b=(vs(true,false,El)/AE-1)/(3*(Getlengthoftvetor3(E0->Transform(*rj2))/pow(E0->Transform(*rj2).Dot(E0),0.5)-E0->Transform(*rj1).Dot(E0)/pow(E0->Transform(*rj1).Dot(E0),0.5)));
+  double b=(vs(true,false,El)/AE-1)/(3*(Getlengthoftvector3(&(E0->Transform(*rj2)))/pow(E0->Transform(*rj2).Dot(*E0),0.5)-E0->Transform(*rj1).Dot(*E0)/pow(E0->Transform(*rj1).Dot(*E0),0.5)));
   double a=1-3*b;
   double top=a-b;
   double bottombot=0;
   for(int i=1;i<5;i++)
   {
-    bottombot+=pow(E0->Transform(*rj(i)).Dot(E0),0.5);
+    bottombot+=pow(E0->Transform(*rj(i)).Dot(*E0),0.5);
   }
 
-  double bottom=pow(E0->Transform(*rj(1)).Dot(E0),0.5)/bottombot-b;
+  double bottom=pow(E0->Transform(*rj(1)).Dot(*E0),0.5)/bottombot-b;
   return top/bottom;
 }
 
-TRotation * wax::Rj(int j);
+TRotation * wax::Rj(int j)
 {
   //calculate Rotation matrix Rj
   //Rj=Rx'(arccos((2/3)**0.5))Rz(phi110+(j-1)pi/2)
   //double pi=3.1415926;
   double arccosthing=0.615480;
   TRotation * Rj=new TRotation();
-  Rj->RotateZ(phi110+(j-1)*pi/2);
+  Rj->RotateZ(phi110+(j-1)*wapi/2);
   Rj->RotateX(arccosthing);
   return Rj;
 }
@@ -224,17 +222,17 @@ TVector3 * wax::vhole(double * E)
   double ou=0.006550*k0-0.19946*k0*k0+0.09859*k0*k0*k0-0.01559*k0*k0*k0*k0;
 
   double sintheta=sin(theta);
-  double sin2phi=sin(s*phi);
+  double sin2phi=sin(2*phi);
 
   double vxp=vh100*(1-A*(pow(sintheta,4)*pow(sin2phi,2)+pow(sin(2*theta),2)));
   double vyp=vh100*ou*(2*pow(sintheta,3)*cos(theta)*pow(sin2phi,2)+sin(4*theta));
   double vzp=vh100*ou*pow(sintheta,3)*sin(4*phi);
 
-  TVector3 * vp=new TVector(vxp,vyp,vzp);
+  TVector3 * vp=new TVector3(vxp,vyp,vzp);
 
   TRotation * Ro=new TRotation();
-  Ro.Rotatez(phi+3.1415926/4+phi110);//need to ask
-  Ro.Rotatey(theta);
+  Ro->RotateZ(phi+3.1415926/4+phi110);//need to ask
+  Ro->RotateY(theta);
 
   return &(vp->Transform(*Ro));
 }

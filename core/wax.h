@@ -14,8 +14,7 @@ namespace WAXING
   class wax;
   
 
-  double pi=3.1415926;
-  double me=0.511;//mev
+
 }
 class WAXING::wax
 {
@@ -47,6 +46,8 @@ class WAXING::wax
     X * field;
 
     int nDimensions;
+    double wapi=3.1415926;
+    double wame=0.511;//mev
 
 
   private :
@@ -72,7 +73,7 @@ class WAXING::wax
 
     double GetlengthofE(double *E);
     TVector3 * GetUnitVector(double *E){};
-    double Getlengrhoftvector3(TVector3 * tar)
+    double Getlengthoftvector3(TVector3 * tar)
     {return tar->Dot(tar->Unit());};
 };
 //rho rhopihi etc need a transform
