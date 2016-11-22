@@ -12,9 +12,6 @@ using namespace WAGE;
 namespace WAXING
 {
   class wax;
-  
-
-
 }
 class WAXING::wax
 {
@@ -72,7 +69,7 @@ class WAXING::wax
     void readconstsfromfile();
 
     double GetlengthofE(double *E);
-    TVector3 * GetUnitVector(double *E){};
+    TVector3 * GetUnitVector(double *E);
     double Getlengthoftvector3(TVector3 * tar)
     {return tar->Dot(tar->Unit());};
 };

@@ -265,3 +265,14 @@ double wax::njchun(double R,TVector3 * E0,int j)
   
 }
   
+double wax::GetlengthofE(double *E)
+{
+  return pow(E[0]*E[0]+E[1]*E[1]+E[2]*E[2],0.5);
+}
+
+TVector3 * wax::GetUnitVector(double *E)
+{
+  TVector3  x= TVector3(E[0],E[1],E[2]);
+  x=x.Unit();
+  return &x;
+}
