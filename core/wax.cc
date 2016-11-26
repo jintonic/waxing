@@ -80,6 +80,78 @@ void wax::UpdateWF()
 }
 
 #include <math.h> 
+double * wax::GetEfromfield(double * location)
+{
+ int d=field->d;//1d?
+ int t=field->t;//polar?
+ double *a=new double[3];
+ if(t==1)
+ {
+   if(d==1)
+   {
+     a[0]=field->GetE1(location[0],location[1],location[2]);
+     a[1]=0;
+     a[2]=0;
+   }
+   if(d==2)
+   {
+     a[0]=field->GetE1(location[0],location[1],location[2]);
+     a[1]=field->GetE2(location[0],location[1],location[2]);
+     a[2]=0;
+   }
+   if(d==3)
+   {
+     a[0]=field->GetE1(location[0],location[1],location[2]);
+     a[1]=field->GetE2(location[0],location[1],location[2]);
+     a[2]=field->GetE3(location[0],location[1],location[2]);
+   }
+ }
+ if(t==2)
+ {
+   if(d==1)
+   {
+     a[0]=field->GetE1(location[0],location[1],location[2]);
+     a[1]=0;
+     a[2]=0;
+   }
+   if(d==2)
+   {
+     double tmp1=field->GetE1(location[0],location[1],location[2]);
+     double tmp2=field->GetE2(location[0],location[1],location[2]);
+     a[0]=tmp1*cos(tmp2);
+     a[1]=tmp1*sin(tmp2);
+     a[2]=0;
+   }
+   if(d==3)
+   {
+     double tmp1=field->GetE1(location[0],location[1],location[2]);
+     double tmp2=field->GetE2(location[0],location[1],location[2]);
+     a[0]=tmp1*cos(tmp2);
+     a[1]=tmp1*sin(tmp2);
+     a[2]=field->GetE3(location[0],location[1],location[2]);
+   }
+ }
+ if(t==3)
+ {
+   if(d==1)
+   {
+     a[0]=field->GetE1(location[0],location[1],location[2]);
+     a[1]=0;
+     a[2]=0;
+   }
+     if(d==3)
+   {
+     double tmp1=field->GetE1(location[0],location[1],location[2]);
+     double tmp2=field->GetE2(location[0],location[1],location[2]);
+     double tmp3=field->GetE3(location[0],location[1],location[2]);
+     a[0]=tmp1*cos(tmp3)*cos(tmp2);
+     a[1]=tmp1*cos(tmp3)*sin(tmp2);
+     a[2]=tmp1*sin(tmp3);
+   }
+ }
+
+ 
+}
 void wax::UpdateVelocity()
 {
 //need some way to find out n-D system 

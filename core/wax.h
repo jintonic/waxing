@@ -52,7 +52,7 @@ class WAXING::wax
     virtual void UpdateLocation();
     virtual void UpdateWF();
 
-    double * GetEfromfield(double *location){};
+    double * GetEfromfield(double *location);
 
     TVector3 * vhole(double *E);
     TVector3 * ve(double *E);
@@ -66,12 +66,13 @@ class WAXING::wax
     TRotation * rj(int j);
 
     double vs (bool Is111,bool Ishole,double E);
-    void readconstsfromfile();
 
     double GetlengthofE(double *E);
     TVector3 * GetUnitVector(double *E);
     double Getlengthoftvector3(TVector3 * tar)
     {return tar->Dot(tar->Unit());};
+    
+    void readconstsfromfile();
 };
 //rho rhopihi etc need a transform
 //xyz only for now
